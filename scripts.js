@@ -85,6 +85,7 @@ $('.bottom-section').on('click','button.delete-button', function() {
   $(this).parents('.idea-card').remove();
 });
 
+
 // //upvote button from default :: not yet functional
 // $('.bottom-section').on('click', 'button.upvote-button', function() {
 //
