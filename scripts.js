@@ -4,6 +4,8 @@ var emptyIdeaCard = $('.idea-card');
 var storageArray = [];
 
 
+$(document).ready(postFromLocal)
+
 //clear input fields
 function clearInput() {
   ideaTitleInput.val('');
@@ -41,6 +43,7 @@ function prependIdeaCard(newIdeaCard) {
 }
 
 //add new idea card on click
+
 $('.save-button').on('click', function(event) {
   event.preventDefault();
   var ideaTitle = ideaTitleInput.val();
@@ -54,31 +57,39 @@ $('.save-button').on('click', function(event) {
 
 //store unique ID
 function storeIdeaCard(newIdeaCard) {
-  storageArray.push(newIdeaCard);
-  localStorage.setItem('ideaIdInfo', JSON.stringify(storageArray));
+  // storageArray.push(newIdeaCard);
+  localStorage.setItem(newIdeaCard.id, JSON.stringify(newIdeaCard));
 }
 
 //retrieve idea card
-function retrieveIdeas() {
-  if(localStorage.getItem('ideaIdInfo')) {
-    var storedIdeas = localStorage.getItem('ideaIdInfo');
-    var parsedIdeas = JSON.parse(storedIdeas);
-    return parsedIdeas;
-  } else {
-    console.log('not working');
-  }
+function retrieveIdeas(id) {
+    // var storedIdeas = localStorage.getItem('ideaIdInfo');
+    var parsedIdeas = JSON.parse(localStorage.getItem(id));
+  //   return parsedIdeas;
+  // } else {
+    console.log(parsedIdeas);
 }
-retrieveIdeas();
+
+// retrieveIdeas();
 
 //post cards from local storage
-function postFromLocal(parsedIdeas) {
-  console.log(parsedIdeas);
-  parsedIdeas.forEach(function(newIdeaCard) {
-  prependIdeaCard(newIdeaCard);
-  })
+// function postFromLocal(parsedIdeas) {
+//   console.log(parsedIdeas);
+//   parsedIdeas.forEach(function(newIdeaCard) {
+//   prependIdeaCard(newIdeaCard);
+//   })
+// }
+function postFromLocal() {
+  for(var i =0; i < localStorage.length; i++){
+    prependIdeaCard(JSON.parse(localStorage.getItem(localStorage.key(i))));
+  }
+  //  console.log(localStorage.getItem(localStorage.key(i)));
 }
 
-postFromLocal(retrieveIdeas());
+
+
+
+// postFromLocal(retrieveIdeas());
 
 //delete idea card from bottom section
 $('.bottom-section').on('click','button.delete-button', function() {
